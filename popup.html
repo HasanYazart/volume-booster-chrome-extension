@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Volume Booster</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="brand-mark" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div>
+          <h1>Volume Booster</h1>
+          <p id="tab-name">Active tab</p>
+        </div>
+        <label class="switch" title="Turn volume boost on or off">
+          <input id="enabled" type="checkbox" aria-label="Turn on volume boost">
+          <span class="switch-track"></span>
+        </label>
+      </header>
+
+      <section class="level" aria-labelledby="level-label">
+        <div class="level-heading">
+          <span id="level-label">Volume level</span>
+          <output id="value" for="gain">100%</output>
+        </div>
+        <input id="gain" type="range" min="100" max="600" step="10" value="100" aria-label="Volume level">
+        <div class="scale" aria-hidden="true"><span>100%</span><span>350%</span><span>600%</span></div>
+      </section>
+
+      <div class="presets" role="group" aria-label="Volume presets">
+        <button type="button" data-gain="1">100%</button>
+        <button type="button" data-gain="1.5">150%</button>
+        <button type="button" data-gain="2">200%</button>
+        <button type="button" data-gain="3">300%</button>
+      </div>
+
+      <p id="warning" class="warning" hidden>
+        High volume can damage your hearing. Increase the level gradually.
+      </p>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>
