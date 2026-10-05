@@ -40,7 +40,7 @@ async function getTabState(tabId) {
   });
 }
 
-async function startBoost(tabId, gain) {
+async function startBoost(tabId, gain, profile, antiClipping) {
   await ensureOffscreenDocument();
 
   const streamId = await chrome.tabCapture.getMediaStreamId({ targetTabId: tabId });
@@ -50,6 +50,8 @@ async function startBoost(tabId, gain) {
     tabId,
     streamId,
     gain,
+    profile,
+    antiClipping,
   });
 }
 
@@ -61,8 +63,10 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       case "GET_STATE":
         return getTabState(message.tabId);
       case "START_CAPTURE":
-        return startBoost(message.tabId, message.gain);
+        return startBoost(message.tabId, message.gain, message.profile, message.antiClipping);
       case "SET_GAIN":
+      case "SET_PROFILE":
+      case "SET_ANTI_CLIPPING":
       case "STOP_CAPTURE":
         await ensureOffscreenDocument();
         return chrome.runtime.sendMessage({ ...message, target: "offscreen" });

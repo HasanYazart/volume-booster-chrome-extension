@@ -3,46 +3,227 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Volume Booster</title>
+    <title>Volume Booster Pro</title>
     <link rel="stylesheet" href="popup.css">
   </head>
   <body>
-    <main>
-      <header>
-        <div class="brand-mark" aria-hidden="true">
-          <span></span><span></span><span></span><span></span>
+    <main class="app-container">
+      <!-- HEADER -->
+      <header class="app-header">
+        <div class="brand-group">
+          <div class="brand-logo" id="brand-logo" title="Volume Booster">
+            <span class="bar bar-1"></span>
+            <span class="bar bar-2"></span>
+            <span class="bar bar-3"></span>
+            <span class="bar bar-4"></span>
+            <span class="bar bar-5"></span>
+          </div>
+          <div class="brand-info">
+            <div class="brand-title-row">
+              <h1 class="brand-title" data-i18n="brandTitle">VOLUME BOOSTER</h1>
+              <span class="badge-pro">PRO</span>
+            </div>
+            <div class="tab-indicator" id="tab-info" title="Active Tab">
+              <svg class="tab-icon" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+              <span id="tab-name" data-i18n="searchingTab">Searching active tab...</span>
+            </div>
+          </div>
         </div>
-        <div>
-          <h1>Volume Booster</h1>
-          <p id="tab-name">Active tab</p>
+
+        <div class="header-controls">
+          <!-- Language Selector -->
+          <div class="lang-selector" role="group" aria-label="Language selection">
+            <button type="button" class="lang-btn active" data-lang="en">EN</button>
+            <button type="button" class="lang-btn" data-lang="tr">TR</button>
+          </div>
+
+          <!-- Master Boost Switch -->
+          <label class="master-switch" id="master-switch-label" title="Turn volume boost on or off" data-i18n-title="masterSwitchTitle">
+            <input id="enabled" type="checkbox" aria-label="Turn volume boost on or off">
+            <span class="switch-slider"></span>
+          </label>
         </div>
-        <label class="switch" title="Turn volume boost on or off">
-          <input id="enabled" type="checkbox" aria-label="Turn on volume boost">
-          <span class="switch-track"></span>
-        </label>
       </header>
 
-      <section class="level" aria-labelledby="level-label">
-        <div class="level-heading">
-          <span id="level-label">Volume level</span>
-          <output id="value" for="gain">100%</output>
+      <!-- HERO VOLUME CONTROL CARD -->
+      <section class="volume-card">
+        <div class="card-header">
+          <span class="card-label" data-i18n="volumeLevel">VOLUME LEVEL</span>
+          <span class="db-pill" id="db-badge">0.0 dB</span>
         </div>
-        <input id="gain" type="range" min="100" max="600" step="10" value="100" aria-label="Volume level">
-        <div class="scale" aria-hidden="true"><span>100%</span><span>350%</span><span>600%</span></div>
+
+        <div class="display-wrap">
+          <output id="value" class="volume-number" for="gain">100%</output>
+          <span class="volume-tag" id="volume-tag" data-i18n="standardLevel">Standard Level</span>
+        </div>
+
+        <!-- Dynamic Studio Spectrum Visualizer -->
+        <div class="spectrum-visualizer" id="spectrum">
+          <span class="spec-bar"></span>
+          <span class="spec-bar"></span>
+          <span class="spec-bar"></span>
+          <span class="spec-bar"></span>
+          <span class="spec-bar"></span>
+          <span class="spec-bar"></span>
+          <span class="spec-bar"></span>
+          <span class="spec-bar"></span>
+          <span class="spec-bar"></span>
+          <span class="spec-bar"></span>
+          <span class="spec-bar"></span>
+          <span class="spec-bar"></span>
+          <span class="spec-bar"></span>
+          <span class="spec-bar"></span>
+          <span class="spec-bar"></span>
+          <span class="spec-bar"></span>
+          <span class="spec-bar"></span>
+          <span class="spec-bar"></span>
+          <span class="spec-bar"></span>
+          <span class="spec-bar"></span>
+        </div>
+
+        <!-- Custom Slider -->
+        <div class="slider-container">
+          <input id="gain" type="range" min="100" max="600" step="5" value="100" aria-label="Volume level">
+          <div class="slider-scale" aria-hidden="true">
+            <span>100%</span>
+            <span>200%</span>
+            <span>300%</span>
+            <span>400%</span>
+            <span>500%</span>
+            <span>600%</span>
+          </div>
+        </div>
+
+        <!-- Quick Presets -->
+        <div class="presets-row" role="group" aria-label="Quick Presets">
+          <button type="button" class="preset-btn" data-gain="1">100%</button>
+          <button type="button" class="preset-btn" data-gain="1.5">150%</button>
+          <button type="button" class="preset-btn" data-gain="2">200%</button>
+          <button type="button" class="preset-btn" data-gain="3">300%</button>
+          <button type="button" class="preset-btn max" data-gain="6">600%</button>
+        </div>
       </section>
 
-      <div class="presets" role="group" aria-label="Volume presets">
-        <button type="button" data-gain="1">100%</button>
-        <button type="button" data-gain="1.5">150%</button>
-        <button type="button" data-gain="2">200%</button>
-        <button type="button" data-gain="3">300%</button>
+      <!-- SOUND PROFILES SECTION -->
+      <section class="section-profiles">
+        <div class="section-title-row">
+          <span class="section-title" data-i18n="profilesTitle">SOUND PROFILES</span>
+          <span class="section-hint" data-i18n="profilesHint">Speaker & Device Tuning</span>
+        </div>
+
+        <div class="profiles-grid" role="radiogroup" aria-label="Sound Profiles">
+          <!-- Speaker Profile (Recommended for anti-distortion) -->
+          <button type="button" class="profile-card active" data-profile="speaker" role="radio" aria-checked="true">
+            <div class="profile-icon-wrap">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+            </div>
+            <div class="profile-details">
+              <span class="profile-name" data-i18n="profSpeakerName">Speaker</span>
+              <span class="profile-desc" data-i18n="profSpeakerDesc">Anti-Crackling & Clear</span>
+            </div>
+          </button>
+
+          <!-- Headphone Profile -->
+          <button type="button" class="profile-card" data-profile="headphone" role="radio" aria-checked="false">
+            <div class="profile-icon-wrap">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+              </svg>
+            </div>
+            <div class="profile-details">
+              <span class="profile-name" data-i18n="profHeadphoneName">Headphones</span>
+              <span class="profile-desc" data-i18n="profHeadphoneDesc">Rich & Deep Bass</span>
+            </div>
+          </button>
+
+          <!-- Vocal / Dialogue Profile -->
+          <button type="button" class="profile-card" data-profile="vocal" role="radio" aria-checked="false">
+            <div class="profile-icon-wrap">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="23"></line>
+                <line x1="8" y1="23" x2="16" y2="23"></line>
+              </svg>
+            </div>
+            <div class="profile-details">
+              <span class="profile-name" data-i18n="profVocalName">Vocal & Dialogue</span>
+              <span class="profile-desc" data-i18n="profVocalDesc">Clear Speech</span>
+            </div>
+          </button>
+
+          <!-- Bass Boost Profile -->
+          <button type="button" class="profile-card" data-profile="bass" role="radio" aria-checked="false">
+            <div class="profile-icon-wrap">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+              </svg>
+            </div>
+            <div class="profile-details">
+              <span class="profile-name" data-i18n="profBassName">Bass & Punch</span>
+              <span class="profile-desc" data-i18n="profBassDesc">Full Low-End</span>
+            </div>
+          </button>
+        </div>
+      </section>
+
+      <!-- ANTI-CLIPPING / ANTI-CRACKLING CARD -->
+      <section class="anti-clipping-card">
+        <div class="anti-info">
+          <div class="shield-badge">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <polyline points="9 12 11 14 15 10"></polyline>
+            </svg>
+          </div>
+          <div>
+            <div class="anti-title-row">
+              <span class="anti-title" data-i18n="antiTitle">Smart Anti-Crackling</span>
+              <span class="anti-tag" data-i18n="antiTagActive">ACTIVE</span>
+            </div>
+            <p class="anti-desc" data-i18n="antiDesc">Filters speaker blowout & harsh distortion</p>
+          </div>
+        </div>
+        <label class="mini-switch" title="Turn anti-crackling protection on or off" data-i18n-title="antiSwitchTitle">
+          <input id="anti-clipping" type="checkbox" checked aria-label="Anti-crackling protection">
+          <span class="mini-slider"></span>
+        </label>
+      </section>
+
+      <!-- DYNAMIC WARNING ALERT -->
+      <div id="warning" class="warning-banner" hidden>
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+          <line x1="12" y1="9" x2="12" y2="13"></line>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+        <span data-i18n="warningText">High volume can damage your speakers or hearing. Increase gradually.</span>
       </div>
 
-      <p id="warning" class="warning" hidden>
-        High volume can damage your hearing. Increase the level gradually.
-      </p>
-      <p id="status" class="status" role="status" aria-live="polite"></p>
+      <!-- FOOTER STATUS -->
+      <footer class="app-footer">
+        <div class="status-wrap">
+          <span class="status-dot" id="status-dot"></span>
+          <span id="status" class="status-text" role="status" aria-live="polite" data-i18n="statusReady">Ready</span>
+        </div>
+        <button type="button" id="reset-btn" class="reset-btn" title="Reset to standard 100%" data-i18n-title="resetTitle">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+          </svg>
+          <span data-i18n="resetBtn">Reset</span>
+        </button>
+      </footer>
     </main>
+
     <script src="popup.js"></script>
   </body>
 </html>

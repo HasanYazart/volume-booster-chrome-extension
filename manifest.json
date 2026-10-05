@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Volume Booster",
-  "description": "Boosts the audio of the active Chrome tab through your headphones or speakers.",
-  "version": "1.0.0",
+  "name": "Volume Booster Pro",
+  "description": "Boost tab audio up to 600% with smart anti-crackling limiter and speaker protection.",
+  "version": "1.2.0",
   "minimum_chrome_version": "116",
   "permissions": [
     "activeTab",
@@ -11,7 +11,7 @@
     "tabCapture"
   ],
   "action": {
-    "default_title": "Volume Booster",
+    "default_title": "Volume Booster Pro",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon16.png",
